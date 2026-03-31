@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dev Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="grid-bg"></div>
+  <div class="glow-orb"></div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">dev<span>/</span>portfolio</div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-cta">Hire Me →</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="about">
+    <div class="hero-badge">
+      <div class="badge-dot"></div>
+      Available for work
+    </div>
+    <h1 class="hero-title">
+      HELLO<br>
+      <span class="accent">IM</span><br>
+      <span class="dim">Sung Kenley Sean Tuuk.</span>
+    </h1>
+    <p class="hero-desc">
+Frontend developer
+    </p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View Projects</button>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="skills-section" id="skills">
+    <div class="section-label">// what I do</div>
+    <h2 class="section-title">Core <span class="dim">skills &</span><br>technologies</h2>
+    <div class="skills-grid">
+      <div class="skill-card" data-fill="90">
+        <span class="skill-icon">{}</span>
+        <div class="skill-name">Frontend Dev</div>
+        <div class="skill-desc">HTML, CSS, JavaScript — membangun UI yang responsif & accessible dari nol.</div>
+        <div class="skill-bar"><div class="skill-fill"></div></div>
+      </div>
+      <div class="skill-card" data-fill="85">
+        <span class="skill-icon">~~</span>
+        <div class="skill-name">CSS & Animation</div>
+        <div class="skill-desc">CSS animations, micro-interactions yang smooth dan elegan.</div>
+        <div class="skill-bar"><div class="skill-fill"></div></div>
+      </div>
+      <div class="skill-card" data-fill="80">
+        <span class="skill-icon">[]</span>
+        <div class="skill-name">UI Thinking</div>
+        <div class="skill-desc">Figma, design systems, user-first approach dalam setiap keputusan.</div>
+        <div class="skill-bar"><div class="skill-fill"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="projects-section" id="projects">
+    <div class="section-label">// recent work</div>
+    <h2 class="section-title">Featured <span class="dim">projects</span></h2>
+    <div class="projects-grid">
+      <div class="project-card">    
+        <div class="project-card">
+        <div class="project-tag">01 — Open Source</div>
+        <div class="project-title">CSS Component Kit</div>
+        <div class="project-desc">Library komponen UI ringan, zero dependencies, hanya HTML & CSS murni.</div>
+        <div class="project-stack">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">npm</span>
+        </div>
+      </div>
+      </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="contact">
+    <div class="footer-mono">© 2025 — all rights reserved</div>
+    <div class="footer-links">
+      <a href="https://github.com/SUNGKENLEY">GitHub</a>
+
+    </div>
+  </footer>
+
+  <script>
+    const cards = document.querySelectorAll('.skill-card');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const fill = entry.target.dataset.fill;
+          const bar = entry.target.querySelector('.skill-fill');
+          setTimeout(() => { bar.style.width = fill + '%'; }, 200);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    cards.forEach(c => observer.observe(c));
+  </script>
+
+</body>
+</html>

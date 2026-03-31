@@ -106,7 +106,7 @@ Frontend developer
           const fill = entry.target.dataset.fill;
           const bar = entry.target.querySelector('.skill-fill');
           setTimeout(() => { bar.style.width = fill + '%'; }, 200);
-          observer.unobserve(entry.target);
+          observer.unobserve(entry.target);   
         }
       });
     }, { threshold: 0.3 });

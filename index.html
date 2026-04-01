@@ -15,14 +15,14 @@
 
   <!-- NAV -->
   <nav>
-    <div class="logo">dev<span>/</span>portfolio</div>
+    <div class="logo">portfolio</div>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <button class="nav-cta">Hire Me →</button>
+    <button class="nav-cta" onclick="document.getElementById('hireModal').classList.add('show')">Hire Me →</button>
   </nav>
 
   <!-- HERO -->
@@ -37,7 +37,7 @@
       <span class="dim">Sung Kenley Sean Tuuk.</span>
     </h1>
     <p class="hero-desc">
-Frontend developer
+      Frontend developer
     </p>
     <div class="hero-actions">
       <button class="btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View Projects</button>
@@ -75,8 +75,7 @@ Frontend developer
     <div class="section-label">// recent work</div>
     <h2 class="section-title">Featured <span class="dim">projects</span></h2>
     <div class="projects-grid">
-      <div class="project-card">    
-        <div class="project-card">
+      <div class="project-card">
         <div class="project-tag">01 — Open Source</div>
         <div class="project-title">CSS Component Kit</div>
         <div class="project-desc">Library komponen UI ringan, zero dependencies, hanya HTML & CSS murni.</div>
@@ -86,7 +85,7 @@ Frontend developer
           <span class="tag">npm</span>
         </div>
       </div>
-      </div>
+    </div>
   </section>
 
   <!-- FOOTER -->
@@ -94,11 +93,48 @@ Frontend developer
     <div class="footer-mono">© 2025 — all rights reserved</div>
     <div class="footer-links">
       <a href="https://github.com/SUNGKENLEY">GitHub</a>
-
     </div>
   </footer>
 
+  <!-- HIRE ME MODAL -->
+  <div class="overlay" id="hireModal" onclick="handleOverlayClick(event)">
+    <div class="modal">
+      <div class="modal-top-line"></div>
+
+      <div id="formState">
+        <div class="modal-label">// get in touch</div>
+        <div class="modal-title">Let's work together</div>
+        <div class="modal-sub">Ceritain project lo, gue bakal balas secepat mungkin.</div>
+
+        <div class="modal-field">
+          <label>Nama</label>
+          <input type="text" placeholder="John Doe" id="inputName" />
+        </div>
+        <div class="modal-field">
+          <label>Email</label>
+          <input type="email" placeholder="john@email.com" id="inputEmail" />
+        </div>
+        <div class="modal-field">
+          <label>Pesan</label>
+          <textarea rows="3" placeholder="Hai, gue butuh lo buat..." id="inputMsg"></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+          <button class="btn-send" onclick="handleSend()">Send Message →</button>
+        </div>
+      </div>
+
+      <div class="success-state" id="successState">
+        <div class="success-icon">✓</div>
+        <div class="success-title">Pesan terkirim!</div>
+        <div class="success-sub">Makasih udah reach out. Gue bakal reply secepatnya.</div>
+      </div>
+    </div>
+  </div>
+
   <script>
+    /* ── Skill bar animation ── */
     const cards = document.querySelectorAll('.skill-card');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -106,16 +142,44 @@ Frontend developer
           const fill = entry.target.dataset.fill;
           const bar = entry.target.querySelector('.skill-fill');
           setTimeout(() => { bar.style.width = fill + '%'; }, 200);
-          observer.unobserve(entry.target);   
+          observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.3 });
     cards.forEach(c => observer.observe(c));
+
+    /* ── Modal logic ── */
+    function closeModal() {
+      document.getElementById('hireModal').classList.remove('show');
+      document.getElementById('formState').style.display = 'block';
+      document.getElementById('successState').style.display = 'none';
+      document.getElementById('inputName').value = '';
+      document.getElementById('inputEmail').value = '';
+      document.getElementById('inputMsg').value = '';
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('hireModal')) closeModal();
+    }
+
+    function handleSend() {
+      const name = document.getElementById('inputName').value.trim();
+      const email = document.getElementById('inputEmail').value.trim();
+      const msg = document.getElementById('inputMsg').value.trim();
+      if (!name || !email || !msg) {
+        alert('Isi semua field dulu ya!');
+        return;
+      }
+      document.getElementById('formState').style.display = 'none';
+      document.getElementById('successState').style.display = 'block';
+      setTimeout(() => { closeModal(); }, 2500);
+    }
+
+    /* ── Close modal with Escape key ── */
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
   </script>
-
-
-
- 
-
+  
 </body>
 </html>

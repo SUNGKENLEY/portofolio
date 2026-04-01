@@ -121,7 +121,7 @@
 
         <div class="modal-actions">
           <button class="btn-cancel" onclick="closeModal()">Cancel</button>
-          <button class="btn-send" onclick="handleSend()">Send Message →</button>
+          <button class="btn-send" id="btnSend" onclick="handleSend()">Send Message →</button>
         </div>
       </div>
 
@@ -133,7 +133,18 @@
     </div>
   </div>
 
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
   <script>
+    /* ── EmailJS Config ── */
+    // Ganti 3 nilai di bawah ini setelah setup di emailjs.com
+    const EMAILJS_PUBLIC_KEY  = 'nIbPYDLiaBpZCNEtm';
+    const EMAILJS_SERVICE_ID  = 'service_kc3six9';
+    const EMAILJS_TEMPLATE_ID = 'template_1m8eomu';
+
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+
     /* ── Skill bar animation ── */
     const cards = document.querySelectorAll('.skill-card');
     const observer = new IntersectionObserver((entries) => {
@@ -156,6 +167,9 @@
       document.getElementById('inputName').value = '';
       document.getElementById('inputEmail').value = '';
       document.getElementById('inputMsg').value = '';
+      const btn = document.getElementById('btnSend');
+      btn.textContent = 'Send Message →';
+      btn.disabled = false;
     }
 
     function handleOverlayClick(e) {
@@ -163,23 +177,43 @@
     }
 
     function handleSend() {
-      const name = document.getElementById('inputName').value.trim();
+      const name  = document.getElementById('inputName').value.trim();
       const email = document.getElementById('inputEmail').value.trim();
-      const msg = document.getElementById('inputMsg').value.trim();
+      const msg   = document.getElementById('inputMsg').value.trim();
+
       if (!name || !email || !msg) {
         alert('Isi semua field dulu ya!');
         return;
       }
-      document.getElementById('formState').style.display = 'none';
-      document.getElementById('successState').style.display = 'block';
-      setTimeout(() => { closeModal(); }, 2500);
+
+      const btn = document.getElementById('btnSend');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        from_name:  name,
+        from_email: email,
+        message:    msg,
+        to_email:   'keneyen1505@gmail.com',
+      })
+      .then(() => {
+        document.getElementById('formState').style.display = 'none';
+        document.getElementById('successState').style.display = 'block';
+        setTimeout(() => { closeModal(); }, 2500);
+      })
+      .catch((err) => {
+        console.error('EmailJS error:', err);
+        alert('Gagal kirim pesan. Coba lagi ya!');
+        btn.textContent = 'Send Message →';
+        btn.disabled = false;
+      });
     }
 
-    /* ── Close modal with Escape key ── */
+    /* ── Close with Escape key ── */
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeModal();
     });
   </script>
-  
+
 </body>
 </html>

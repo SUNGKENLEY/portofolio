@@ -20,6 +20,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#skills">Skills</a></li>
+      <li><a href="#certificates">Certificates</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <button class="nav-cta" onclick="document.getElementById('hireModal').classList.add('show')">Hire Me →</button>
@@ -97,6 +98,28 @@
         <div class="skill-desc">Figma, design systems, user-first approach dalam setiap keputusan desain.</div>
         <div class="skill-bar"><div class="skill-fill"></div></div>
       </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATES -->
+  <section class="certs-section" id="certificates">
+    <div class="section-label">// achievements</div>
+    <h2 class="section-title">Certificates <span class="dim">& awards</span></h2>
+    <div class="certs-grid">
+
+      <div class="cert-card" onclick="openCert('foto.jpg')">
+        <div class="cert-img-wrap">
+          <img src="foto.jpg" alt="The Complete Full-Stack Web Development Bootcamp" class="cert-img" />
+          <div class="cert-overlay">
+            <span class="cert-view">View Full →</span>
+          </div>
+        </div>
+        <div class="cert-info">
+          <div class="cert-name">Full-Stack Web Development Bootcamp</div>
+          <div class="cert-issuer">Udemy · 21 April 2026</div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -220,7 +243,25 @@
       });
     }
 
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    function openCert(src) {
+      document.getElementById('certLightboxImg').src = src;
+      document.getElementById('certLightbox').classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeCert() {
+      document.getElementById('certLightbox').classList.remove('show');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { closeModal(); closeCert(); }
+    });
   </script>
+  <!-- CERT LIGHTBOX -->
+  <div class="cert-lightbox" id="certLightbox" onclick="closeCert()">
+    <button class="cert-lightbox-close" onclick="closeCert()">✕</button>
+    <img src="" alt="Certificate" class="cert-lightbox-img" id="certLightboxImg" />
+  </div>
+
 </body>
 </html>
